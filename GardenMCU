@@ -1,0 +1,40 @@
+#include <DHT.h>
+
+#define DHTPIN 2     
+#define DHTTYPE DHT11 
+
+DHT dht(DHTPIN, DHTTYPE);
+
+
+
+
+const int senspin = A0;  
+void setup() {
+  Serial.begin(9600);
+
+  dht.begin();
+}
+
+void loop() {
+  float umid_sol;
+
+  umid_sol= ( 100.00 - ( (analogRead(senspin)/1023.00) * 100.00 ) );
+
+  Serial.print("umiditate sol  = ");
+  Serial.print(umid_sol);
+  Serial.println("%");
+
+  delay(1000);
+  float temp = dht.readTemperature();
+  float umid_aer = dht.readHumidity();
+
+  Serial.print("Temperatura: ");
+  Serial.print(temp);
+  Serial.println(" °C");
+  
+  Serial.print("Umiditate aer: ");
+  Serial.print(umid_aer);
+  Serial.println(" %");
+
+  delay(1000);
+}
